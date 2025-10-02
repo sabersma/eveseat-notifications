@@ -64,7 +64,7 @@ class StructureUnderAttack extends AbstractMailNotification
             ->subject('Structure Under Attack Notification')
             ->line('A structure is under attack!')
             ->line(
-                sprintf('Citadel (%s, "%s") attacked')
+                sprintf('Citadel (%s, %s) attacked', $type->typeName, $this->notification->text['structureName'])
             )
             ->line(
                 sprintf('(%d shield, %d armor, %d hull)',
