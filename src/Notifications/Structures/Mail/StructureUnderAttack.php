@@ -59,12 +59,20 @@ class StructureUnderAttack extends AbstractMailNotification
     public function toMail($notifiable)
     {
         $system = MapDenormalize::find($this->notification->text['solarsystemID']);
+        $structure = UniverseStructure::find($this->notification->text['structureID']);
+        $type = InvType::find($this->notification->text['structureShowInfoData'][1]);
+        $name = "Structure";
+        $typeName = $type->typeName;
+        if (! is_null($structure)) {
+            $name = $structure->name;
+        }
+
 
         return (new MailMessage)
             ->subject('Structure Under Attack Notification')
             ->line('A structure is under attack!')
             ->line(
-                sprintf('Citadel (%s, %s) attacked', $this->notification->text['structureType'], $this->notification->text['structureName'])
+                sprintf('Citadel (%s, %s) attacked', $typeName, $name)
             )
             ->line(
                 sprintf('(%d shield, %d armor, %d hull)',
